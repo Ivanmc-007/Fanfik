@@ -17,12 +17,8 @@ public class Paragraph extends AbstractEntity {
    private Composition composition;
 
    @ManyToMany
-   @JoinTable(name="paragraph_user",
-           joinColumns=
-           @JoinColumn(name="paragraph_id", referencedColumnName="id"),
-           inverseJoinColumns=
-           @JoinColumn(name="user_id", referencedColumnName="id"))
-   private Set<User> likes;
+   @JoinTable(name = "paragraph_user", joinColumns = @JoinColumn(name = "paragraph_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+   private Set<User> likes; // какие пользователи поставили like
 
    public String getName() {
       return name;

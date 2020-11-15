@@ -1,7 +1,5 @@
 import React from "react";
 import ReactDom from "react-dom";
-//import Main from "../../component/Main/index";
+import App from "../../component/App/app";
 
-const title = React.createElement("h1", {}, "Hello From React!");
-
-ReactDom.render(title, document.getElementById("root"));
+ReactDom.render(<App />, document.getElementById("root"));

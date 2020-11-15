@@ -1,32 +1,56 @@
 package com.ivan.fanfik.entity;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "usr")
-public class User extends AbstractEntity {
+public class User implements UserDetails {
 
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   @JsonView({ View.UserProfile.class })
+   private Long id;
+
+   @JsonView({ View.UserProfile.class })
    private String name;
 
+   @JsonView({ View.UserProfile.class })
    private String email;
 
    private String password;
 
+   @JsonView({ View.UserProfile.class })
+   private boolean active;
+
+   @JsonView({ View.UserProfile.class })
    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
    @Enumerated(value = EnumType.STRING)
    private Set<Role> roles;
 
-   @OneToMany(mappedBy="user")
-   private List<Composition> compositions;
+   @JsonView({ View.UserProfile.class })
+   @OneToMany(mappedBy = "user")
+   private List<Composition> compositions = new ArrayList<>();
 
-   @ManyToMany(mappedBy="users")
+   @ManyToMany(mappedBy = "users")
    private Set<Mark> marks;
 
    @ManyToMany(mappedBy = "likes")
-   private Set<Paragraph> paragraphs;
+   private Set<Paragraph> paragraphs; // каким главам пользователь поставил like
+
+   public Long getId() {
+      return id;
+   }
 
    public String getName() {
       return name;
@@ -44,12 +68,50 @@ public class User extends AbstractEntity {
       this.email = email;
    }
 
+   @Override
+   public Collection<? extends GrantedAuthority> getAuthorities() {
+      return roles;
+   }
+
    public String getPassword() {
       return password;
    }
 
+   @Override
+   public String getUsername() {
+      return name;
+   }
+
+   @Override
+   public boolean isAccountNonExpired() {
+      return true;
+   }
+
+   @Override
+   public boolean isAccountNonLocked() {
+      return true;
+   }
+
+   @Override
+   public boolean isCredentialsNonExpired() {
+      return true;
+   }
+
+   @Override
+   public boolean isEnabled() {
+      return active;
+   }
+
    public void setPassword(String password) {
       this.password = password;
+   }
+
+   public boolean isActive() {
+      return active;
+   }
+
+   public void setActive(boolean active) {
+      this.active = active;
    }
 
    public Set<Role> getRoles() {

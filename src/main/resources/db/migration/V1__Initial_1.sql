@@ -93,7 +93,8 @@ create sequence hibernate_sequence start with 1 increment by 1;
     );
 
     create table usr (
-       id bigint not null,
+        id bigint not null,
+        active boolean not null,
         email varchar(255),
         name varchar(255),
         password varchar(255),
