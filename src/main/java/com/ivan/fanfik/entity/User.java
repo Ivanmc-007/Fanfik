@@ -18,27 +18,26 @@ public class User implements UserDetails {
 
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
-   @JsonView({ View.UserProfile.class })
+   @JsonView({ Views.UserProfile.class, Views.Composition.class })
    private Long id;
 
-   @JsonView({ View.UserProfile.class })
+   @JsonView({ Views.UserProfile.class })
    private String name;
 
-   @JsonView({ View.UserProfile.class })
+   @JsonView({ Views.UserProfile.class })
    private String email;
 
    private String password;
 
-   @JsonView({ View.UserProfile.class })
+   @JsonView({ Views.UserProfile.class })
    private boolean active;
 
-   @JsonView({ View.UserProfile.class })
+   @JsonView({ Views.UserProfile.class })
    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
    @Enumerated(value = EnumType.STRING)
    private Set<Role> roles;
 
-   @JsonView({ View.UserProfile.class })
    @OneToMany(mappedBy = "user")
    private List<Composition> compositions = new ArrayList<>();
 
@@ -47,6 +46,9 @@ public class User implements UserDetails {
 
    @ManyToMany(mappedBy = "likes")
    private Set<Paragraph> paragraphs; // каким главам пользователь поставил like
+
+   @OneToMany(mappedBy = "user")
+   private List<Comment> comments;
 
    public Long getId() {
       return id;
@@ -144,5 +146,13 @@ public class User implements UserDetails {
 
    public void setParagraphs(Set<Paragraph> paragraphs) {
       this.paragraphs = paragraphs;
+   }
+
+   public List<Comment> getComments() {
+      return comments;
+   }
+
+   public void setComments(List<Comment> comments) {
+      this.comments = comments;
    }
 }

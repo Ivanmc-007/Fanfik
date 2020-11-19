@@ -10,6 +10,7 @@ import MainIndex from "./pageIndex/Main/index";
 import MainLogin from "./pageLogin/Main/index";
 import MainRegistration from "./pageRegistration/Main/index";
 import MainProfile from "./pageProfile/Main/index";
+import MainComposition from "./pageComposition/Main/index";
 import Header from "./Header/index";
 import PrivateRoute from "./PrivateRoute/index";
 
@@ -31,6 +32,7 @@ export default function App() {
                <Route exact path="/" component={MainIndex} />
                <Route path="/login" component={MainLogin} />
                <Route path="/registration" component={MainRegistration} />
+               <Route path="/compositions/:id" component={MainComposition} />
                <PrivateRoute path="/profile" component={MainProfile} pathRedirect="/login" />
                {/* <Route path="/profile" component={MainProfile} /> */}
             </Switch>

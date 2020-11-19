@@ -20,9 +20,10 @@ function getCurrentUser() {
    return currUs;
 }
 
-const ContextUser = ({ children }) => {
+export default function ContextUser({ children }) {
 
    const [state, dispatchUser] = React.useReducer(reducer, { user: null });
+
    return (
       <Context.Provider value={
          {
@@ -35,5 +36,3 @@ const ContextUser = ({ children }) => {
       </Context.Provider>
    );
 }
-
-export default ContextUser;

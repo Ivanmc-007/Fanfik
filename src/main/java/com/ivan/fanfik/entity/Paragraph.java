@@ -6,7 +6,7 @@ import java.util.Set;
 @Entity
 public class Paragraph extends AbstractEntity {
 
-   private String name;
+   private String name; // title
 
    private String text;
 
