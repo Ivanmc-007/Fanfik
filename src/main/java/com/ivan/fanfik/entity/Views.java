@@ -7,4 +7,14 @@ public final class Views {
 
    public interface Composition {
    }
+
+   public interface Paragraph {
+   }
+
+   public interface CompositionSearch {
+   }
+
+   public interface Comment {
+   }
+
 }

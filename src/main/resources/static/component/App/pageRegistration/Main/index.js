@@ -1,10 +1,11 @@
 import React from "react";
 import FormRegistration from "../FormRegistration/index";
+import "./style.scss"
 
 export default function Main() {
    return (
       <main>
-         <section>
+         <section className="section-one">
             <FormRegistration />
          </section>
       </main>

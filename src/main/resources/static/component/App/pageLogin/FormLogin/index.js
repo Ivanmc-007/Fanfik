@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Context } from "../../context/user/context";
 import { useHistory } from "react-router-dom";
+import "./style.scss";
 
 export default function FormLogin() {
    const { setCurrentUser, dispatchUser } = useContext(Context);
@@ -60,12 +61,12 @@ export default function FormLogin() {
                .required("Required")
          })
       } onSubmit={handlerSubmit}>
-         <Form>
-            <Field type="text" placeholder="Login" name="username" />
-            <div style={{ color: 'red', display: "inline-block" }}><ErrorMessage name="username" style={{ color: 'blue' }} /></div>
-            <Field type="password" placeholder="Password" name="password" />
-            <div style={{ color: 'red', display: "inline-block" }}><ErrorMessage name="password" /></div>
-            <button type="submit">Log In</button>
+         <Form className="form-login">
+            <Field type="text" placeholder="Login" name="username" className="form-login__field" />
+            <div className="form-login__error"><ErrorMessage name="username" style={{ color: 'blue' }} /></div>
+            <Field type="password" placeholder="Password" name="password" className="form-login__field" />
+            <div className="form-login__error"><ErrorMessage name="password" /></div>
+            <button type="submit" className="form-login__button">Log In</button>
          </Form>
       </Formik>
    );

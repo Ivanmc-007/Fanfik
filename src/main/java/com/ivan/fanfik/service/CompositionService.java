@@ -1,14 +1,13 @@
 package com.ivan.fanfik.service;
 
-import com.ivan.fanfik.annotation.CurrentUser;
 import com.ivan.fanfik.entity.Composition;
 import com.ivan.fanfik.entity.User;
 import com.ivan.fanfik.repository.CompositionRepository;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -31,15 +30,26 @@ public class CompositionService {
       return compositionRepository.findAll();
    }
 
-   public Optional<Composition> findById(Long id/* , Optional<User> optionalUser */) {
-      // Optional<Composition> optional = compositionRepository.findById(id);
-      // if (optional.isPresent() && optionalUser.isPresent()) {
-      // Composition composition = optional.get();
-      // composition.setUser(optionalUser.get());
-      // return Optional.of(composition);
-      // }
-      // return optional;
+   public Optional<Composition> findById(Long id) {
       return compositionRepository.findById(id);
+   }
+
+   public Optional<Composition> findByIdFast(Long id) {
+      return compositionRepository.findByIdDefault(id);
+   }
+
+   public List<Composition> findByNewestDateUpdate() {
+      return compositionRepository.findTop15ByOrderByDateUpdateDesc();
+   }
+
+   public List<Composition> findBySearchText(String text) {
+      if (stringIsEmpty(text))
+         return new ArrayList<>();
+      return compositionRepository.findByNameOrTagText(text);
+   };
+
+   private boolean stringIsEmpty(String string) {
+      return (string == null || string.length() == 0) ? true : false;
    }
 
 }

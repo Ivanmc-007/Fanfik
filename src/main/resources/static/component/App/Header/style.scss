@@ -1,0 +1,45 @@
+.header {
+   background-color: #0e2e21;
+   height: 70px;
+}
+
+.section-header {
+   display: grid;
+   grid-template: 1fr / minmax(auto,220px) 1fr;
+   align-items: center;
+   min-height: 100%;
+
+   &__logo {
+      display: grid;
+      justify-items: start;
+      align-items: center;
+      font-weight: 700;
+      font-size: 28px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+   }
+
+   &__menu {
+      display: grid;
+      justify-items: end;
+   }
+
+   &__list {
+      display: grid;
+      grid-auto-flow: column;
+      text-transform: uppercase;
+	}
+
+   &__point {
+      padding-left: 25px;
+      font-weight: 700;
+      font-size: 20px;
+   }
+}
+
+a {
+   color: #d6bb74;
+   &:hover {
+      color: #ffd700;
+   }
+}

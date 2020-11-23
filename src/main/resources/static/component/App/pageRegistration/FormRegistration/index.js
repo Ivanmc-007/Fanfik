@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from "react-router-dom";
+import "./style.scss";
 
 export default function FormRegistration() {
 
@@ -36,15 +37,15 @@ export default function FormRegistration() {
                .email("Invalid email address")
          })
       } onSubmit={onSubmitHandler}>
-         <Form>
-            <Field type="text" placeholder="Login" name="name" />
-            <div style={{ color: 'red', display: "inline-block" }}><ErrorMessage name="name" style={{ color: 'blue' }} /></div>
-            <div style={{ color: 'red', display: "inline-block" }}><MyErrorMessage value={errorMessage} /></div>
-            <Field type="email" placeholder="Email" name="email" />
-            <div style={{ color: 'red', display: "inline-block" }}><ErrorMessage name="email" /></div>
-            <Field type="password" placeholder="Password" name="password" />
-            <div style={{ color: 'red', display: "inline-block" }}><ErrorMessage name="password" /></div>
-            <button type="submit">Register now</button>
+         <Form className="form-registration">
+            <Field type="text" placeholder="Login" name="name" className="form-registration__field" />
+            <div className="form-registration__error"><ErrorMessage name="name" /></div>
+            <div className="form-registration__error"><MyErrorMessage value={errorMessage} /></div>
+            <Field type="email" placeholder="Email" name="email" className="form-registration__field" />
+            <div className="form-registration__error"><ErrorMessage name="email" /></div>
+            <Field type="password" placeholder="Password" name="password" className="form-registration__field" />
+            <div className="form-registration__error"><ErrorMessage name="password" /></div>
+            <button type="submit" className="form-registration__button">Register now</button>
          </Form>
       </Formik>
    );

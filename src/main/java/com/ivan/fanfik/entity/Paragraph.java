@@ -1,17 +1,29 @@
 package com.ivan.fanfik.entity;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
 import java.util.Set;
 
 @Entity
-public class Paragraph extends AbstractEntity {
+public class Paragraph {
 
+   @JsonView({ Views.Paragraph.class })
+   @Id
+   @GeneratedValue(strategy = GenerationType.AUTO)
+   private Long id;
+
+   @JsonView({ Views.Paragraph.class })
    private String name; // title
 
+   @JsonView({ Views.Paragraph.class })
    private String text;
 
+   @JsonView({ Views.Paragraph.class })
    private String linkToImage;
 
+   @JsonView({ Views.Paragraph.class })
    @ManyToOne
    @JoinColumn(name = "composition_id")
    private Composition composition;
@@ -19,6 +31,10 @@ public class Paragraph extends AbstractEntity {
    @ManyToMany
    @JoinTable(name = "paragraph_user", joinColumns = @JoinColumn(name = "paragraph_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
    private Set<User> likes; // какие пользователи поставили like
+
+   public Long getId() {
+      return id;
+   }
 
    public String getName() {
       return name;

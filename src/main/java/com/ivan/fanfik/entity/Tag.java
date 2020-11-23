@@ -13,12 +13,12 @@ import java.util.Set;
 @Entity
 public class Tag {
 
-   @JsonView({ Views.Composition.class })
+   @JsonView({ Views.Composition.class, Views.CompositionSearch.class })
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Long id;
 
-   @JsonView({ Views.Composition.class })
+   @JsonView({ Views.Composition.class, Views.CompositionSearch.class })
    private String text;
 
    @ManyToMany(mappedBy = "tags")

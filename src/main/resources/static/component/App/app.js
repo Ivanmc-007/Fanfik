@@ -11,8 +11,10 @@ import MainLogin from "./pageLogin/Main/index";
 import MainRegistration from "./pageRegistration/Main/index";
 import MainProfile from "./pageProfile/Main/index";
 import MainComposition from "./pageComposition/Main/index";
+import MainParagraph from "./pageParagraph/Main/index";
 import Header from "./Header/index";
 import PrivateRoute from "./PrivateRoute/index";
+import "./style.scss";
 
 const history = createBrowserHistory();
 
@@ -32,7 +34,8 @@ export default function App() {
                <Route exact path="/" component={MainIndex} />
                <Route path="/login" component={MainLogin} />
                <Route path="/registration" component={MainRegistration} />
-               <Route path="/compositions/:id" component={MainComposition} />
+               <Route exact path="/compositions/:id" component={MainComposition} />
+               <Route path="/compositions/:id/paragraphs" component={MainParagraph} />
                <PrivateRoute path="/profile" component={MainProfile} pathRedirect="/login" />
                {/* <Route path="/profile" component={MainProfile} /> */}
             </Switch>

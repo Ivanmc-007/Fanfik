@@ -1,0 +1,26 @@
+.form-registration {
+   display: grid;
+   grid-template-columns: 1fr;
+   &__field {
+      display: block;
+      width: 100%;
+      margin-top: 15px;
+      &:first-child {
+         margin-top: 0px;
+      }
+   }
+
+   &__error {
+      width: 100%;
+      color: #e60023;
+      font-style: italic;
+   }
+
+   &__button {
+      margin-top: 15px;
+      justify-self: end;
+      @media(max-width:450px) {
+         width: 100%;
+      }
+   }
+}

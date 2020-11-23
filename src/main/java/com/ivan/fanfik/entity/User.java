@@ -1,32 +1,34 @@
 package com.ivan.fanfik.entity;
 
-import javax.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "usr")
+@JsonIgnoreProperties(value = { "password" }, allowSetters = true)
 public class User implements UserDetails {
 
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
-   @JsonView({ Views.UserProfile.class, Views.Composition.class })
+   @JsonView({ Views.UserProfile.class, Views.Composition.class, Views.Comment.class })
    private Long id;
 
-   @JsonView({ Views.UserProfile.class })
+   @JsonView({ Views.UserProfile.class, Views.Comment.class })
    private String name;
 
    @JsonView({ Views.UserProfile.class })
    private String email;
 
+   @JsonProperty("password")
    private String password;
 
    @JsonView({ Views.UserProfile.class })

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { ContextProfile } from "../Main/index";
+import "./style.scss";
 
 export default function FormCreateComposition(props) {
    const { changerCompositions, setChangerCompositions } = useContext(ContextProfile);
@@ -19,7 +20,7 @@ export default function FormCreateComposition(props) {
          name: "",
          shortDescription: "",
          genres: [],
-         tags: [],
+         tags: ["", "", ""],
       }} validationSchema={
          Yup.object({
             name: Yup.string()
@@ -29,54 +30,63 @@ export default function FormCreateComposition(props) {
                .required("Required")
                .max(80, "Must be 50 characters or less"),
          })
-      } onSubmit={handlerSubmit}>
+      } onSubmit={onSubmitHandler}>
 
-         <Form>
-            <div>
-               <Field type="text" placeholder="Name" name="name" />
-               <ErrorMessage name="name" />
-            </div>
-            <div>
-               <Field type="text" placeholder="Shot description" name="shortDescription" />
-               <ErrorMessage name="shortDescription" />
-            </div>
-            {
-               genres.map((genre, index) => {
-                  return (
-                     <label key={genre.id}>
-                        <Field type="checkbox" checked={arrChecked[index]} name="genres" value={genre.id} />
-                        {genre.name}
-                     </label>
-                  );
-               })
-            }
+         <Form className="form-create-composition">
 
-            <div><Field type="text" name={`tags[0]`} placeholder="Tag1" /></div>
-            <div><Field type="text" name={`tags[1]`} placeholder="Tag2" /></div>
-            <div><Field type="text" name={"tags[2]"} placeholder="Tag3" /></div>
+            <Field type="text" placeholder="Name" name="name" className="form-create-composition__field" />
+            <div className="form-create-composition__error"><ErrorMessage name="name" /></div>
+
+            <Field type="text" placeholder="Shot description" name="shortDescription" className="form-create-composition__field" />
+            <div className="form-create-composition__error"><ErrorMessage name="shortDescription" /></div>
+            <div className="form-create-composition__checkboxs">
+               {
+                  genres.map((genre, index) => {
+                     return (
+                        <label key={genre.id}>
+                           <Field type="checkbox" checked={arrChecked[index]} name="genres" value={genre.id} className="form-create-composition__checkbox" />
+                           {genre.name}
+                        </label>
+                     );
+                  })
+               }
+            </div>
+
+            <Field type="text" name={`tags[0]`} placeholder="Tag1" className="form-create-composition__field" />
+            <Field type="text" name={`tags[1]`} placeholder="Tag2" className="form-create-composition__field" />
+            <Field type="text" name={"tags[2]"} placeholder="Tag3" className="form-create-composition__field" />
             <div>Node: Add paragraphs with text you can on page of composition
                (It will be available after creation)</div>
-            <div><button type="submit">Create</button></div>
+            <button className="form-create-composition__button" type="submit">Create</button>
          </Form>
       </Formik>
    );
 
-   async function handlerSubmit(values, { setSubmitting }) {
-      try {
-         const response = await fetch("/api/compositions", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(values)
-         });
-         console.log("status: ", response.status);
-         if (response.status === 200) {
-            setChangerCompositions(!changerCompositions);
+   function onSubmitHandler(values, { setSubmitting }) {
+      let valuesBody = {};
+      for (let key in values) {
+         if (key === "tags") {
+            valuesBody.tags = [];
+            values.tags.forEach(tag => {
+               if (tag.length > 0)
+                  valuesBody.tags.push(tag);
+            });
+         } else {
+            valuesBody[key] = values[key];
          }
-      } catch (err) {
-         console.log("ERR", err);
-      } finally {
-         setSubmitting(false);
       }
 
+      fetch("/api/compositions", {
+         method: "POST",
+         headers: { "Content-Type": "application/json" },
+         body: JSON.stringify(valuesBody)
+      })
+         .then(response => {
+            if (response.status === 200)
+               setChangerCompositions(!changerCompositions);
+            else throw new Error(`Something is wrong! Status response: ${response.status}`);
+         })
+         .catch(error => console.log("ERR", error))
+         .finally(setSubmitting(false));
    }
 }

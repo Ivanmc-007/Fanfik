@@ -19,6 +19,10 @@ public class TagService {
       this.tagRepository = tagRepository;
    }
 
+   public List<Tag> findAll() {
+      return tagRepository.findAll();
+   }
+
    public Set<Tag> saveByText(List<String> texts) {
       // выбрать те что уже есть в БД
       List<Tag> tags = tagRepository.findByTextIn(texts);

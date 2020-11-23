@@ -4,32 +4,32 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 public class Composition {
 
-   @JsonView({ Views.Composition.class })
+   @JsonView({ Views.Composition.class, Views.Paragraph.class, Views.CompositionSearch.class })
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Long id;
 
-   @JsonView({ Views.Composition.class })
+   @JsonView({ Views.Composition.class, Views.Paragraph.class, Views.CompositionSearch.class })
    private String name;
 
    @JsonView({ Views.Composition.class })
    private String shortDescription;
 
-   private Date dateUpdate;
+   private Timestamp dateUpdate;
 
    @JsonView({ Views.Composition.class })
    @ManyToMany
    @JoinTable(name = "composition_genre", joinColumns = @JoinColumn(name = "composition_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
    private Set<Genre> genres;
 
-   @JsonView({ Views.Composition.class })
+   @JsonView({ Views.Composition.class, Views.CompositionSearch.class })
    @ManyToMany
    @JoinTable(name = "composition_tag", joinColumns = @JoinColumn(name = "composition_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
    private Set<Tag> tags;
@@ -109,11 +109,11 @@ public class Composition {
       this.marks = marks;
    }
 
-   public Date getDateUpdate() {
+   public Timestamp getDateUpdate() {
       return dateUpdate;
    }
 
-   public void setDateUpdate(Date dateUpdate) {
+   public void setDateUpdate(Timestamp dateUpdate) {
       this.dateUpdate = dateUpdate;
    }
 

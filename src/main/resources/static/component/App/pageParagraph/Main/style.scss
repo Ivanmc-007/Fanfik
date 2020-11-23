@@ -1,0 +1,16 @@
+.paragraph {
+   &__title {
+      padding-bottom: 15px;
+   }
+
+   &__text {
+      text-align: justify;
+      font-size: 18px;
+   }
+
+   &__image {
+      width: 250px;
+      float: left; /* Выравнивание по левому краю */
+      margin: 0px 7px 7px 0;
+   }
+}

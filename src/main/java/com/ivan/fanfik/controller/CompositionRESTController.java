@@ -63,4 +63,16 @@ public class CompositionRESTController {
       return compositionService.findByUser(user);
    }
 
+   @JsonView({ Views.CompositionSearch.class })
+   @GetMapping("/search")
+   public List<Composition> getByAll(@RequestParam(name = "text", defaultValue = "") String searchText) {
+      return compositionService.findBySearchText(searchText);
+   }
+
+   @JsonView({ Views.CompositionSearch.class })
+   @GetMapping("/newest")
+   public List<Composition> newest() {
+      return compositionService.findByNewestDateUpdate();
+   }
+
 }
