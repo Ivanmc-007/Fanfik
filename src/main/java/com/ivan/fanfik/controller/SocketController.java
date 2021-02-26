@@ -1,7 +1,5 @@
 package com.ivan.fanfik.controller;
 
-import java.util.Optional;
-
 import com.fasterxml.jackson.annotation.JsonView;
 import com.ivan.fanfik.entity.Comment;
 import com.ivan.fanfik.entity.Composition;
@@ -10,14 +8,15 @@ import com.ivan.fanfik.entity.Views;
 import com.ivan.fanfik.entity.dto.CommentDto;
 import com.ivan.fanfik.exception.CompositionNotFoundException;
 import com.ivan.fanfik.exception.UserNotFoundException;
+import com.ivan.fanfik.service.CommentService;
 import com.ivan.fanfik.service.CompositionService;
 import com.ivan.fanfik.service.UserService;
-import com.ivan.fanfik.service.CommentService;
-
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 public class SocketController {

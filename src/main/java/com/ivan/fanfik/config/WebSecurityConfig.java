@@ -1,11 +1,7 @@
 package com.ivan.fanfik.config;
 
-import java.util.Optional;
-
-import com.ivan.fanfik.entity.User;
 import com.ivan.fanfik.exception.UsernameNotFoundException;
 import com.ivan.fanfik.service.UserService;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

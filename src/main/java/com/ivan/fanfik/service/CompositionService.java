@@ -46,10 +46,10 @@ public class CompositionService {
       if (stringIsEmpty(text))
          return new ArrayList<>();
       return compositionRepository.findByNameOrTagText(text);
-   };
+   }
 
    private boolean stringIsEmpty(String string) {
-      return (string == null || string.length() == 0) ? true : false;
+      return string == null || string.length() == 0;
    }
 
 }

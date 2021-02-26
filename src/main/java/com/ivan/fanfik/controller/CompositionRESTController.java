@@ -11,7 +11,7 @@ import com.ivan.fanfik.exception.CompositionNotFoundException;
 import com.ivan.fanfik.exception.UnauthorizedUserException;
 import com.ivan.fanfik.service.CompositionService;
 import com.ivan.fanfik.service.GenreService;
-import com.ivan.fanfik.service.TagService;
+import com.ivan.fanfik.service.TagServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,14 +24,14 @@ public class CompositionRESTController {
 
    private final GenreService genreService;
 
-   private final TagService tagService;
+   private final TagServiceImpl tagServiceImpl;
 
    private final CompositionService compositionService;
 
-   public CompositionRESTController(GenreService genreService, TagService tagService,
-         CompositionService compositionService) {
+   public CompositionRESTController(GenreService genreService, TagServiceImpl tagServiceImpl,
+                                    CompositionService compositionService) {
       this.genreService = genreService;
-      this.tagService = tagService;
+      this.tagServiceImpl = tagServiceImpl;
       this.compositionService = compositionService;
    }
 
@@ -51,7 +51,7 @@ public class CompositionRESTController {
          composition.setName(compositionDto.getName());
          composition.setShortDescription(compositionDto.getShortDescription());
          composition.setGenres(genreService.findAllById(compositionDto.getGenres()));
-         Set<Tag> tags = tagService.saveByText(compositionDto.getTags());
+         Set<Tag> tags = tagServiceImpl.saveByText(compositionDto.getTags());
          composition.setTags(tags);
          return compositionService.save(composition);
       }
