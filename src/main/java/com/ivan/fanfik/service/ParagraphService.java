@@ -7,6 +7,7 @@ import com.ivan.fanfik.entity.Paragraph;
 import com.ivan.fanfik.repository.ParagraphRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ParagraphService {
@@ -17,10 +18,12 @@ public class ParagraphService {
       this.paragraphRepository = paragraphRepository;
    }
 
+   @Transactional(readOnly = true)
    public List<Paragraph> findByComposition(Composition composition) {
       return paragraphRepository.findByComposition(composition);
    }
 
+   @Transactional(rollbackFor = { Exception.class })
    public Paragraph save(Paragraph paragraph) {
       return paragraphRepository.save(paragraph);
    }

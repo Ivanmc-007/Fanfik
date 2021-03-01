@@ -8,6 +8,7 @@ import com.ivan.fanfik.entity.Genre;
 import com.ivan.fanfik.repository.GenreRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GenreService {
@@ -18,10 +19,12 @@ public class GenreService {
       this.genreRepository = genreRepository;
    }
 
+   @Transactional(readOnly = true)
    public List<Genre> findAll() {
       return genreRepository.findAll();
    }
 
+   @Transactional(readOnly = true)
    public Set<Genre> findAllById(List<Long> ids) {
       return new HashSet<>(genreRepository.findAllById(ids));
    }

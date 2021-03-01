@@ -9,6 +9,8 @@ import com.ivan.fanfik.entity.Tag;
 import com.ivan.fanfik.repository.TagRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TagService {
@@ -19,10 +21,12 @@ public class TagService {
       this.tagRepository = tagRepository;
    }
 
+   @Transactional(readOnly = true)
    public List<Tag> findAll() {
       return tagRepository.findAll();
    }
 
+   @Transactional(rollbackFor = { Exception.class }, propagation = Propagation.REQUIRED)
    public Set<Tag> saveByText(List<String> texts) {
       // выбрать те что уже есть в БД
       List<Tag> tags = tagRepository.findByTextIn(texts);
