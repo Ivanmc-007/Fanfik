@@ -1,34 +1,15 @@
 package com.ivan.fanfik.service;
 
+import com.ivan.fanfik.entity.User;
+
 import java.util.Optional;
 
-import com.ivan.fanfik.entity.User;
-import com.ivan.fanfik.repository.UserRepository;
+public interface UserService {
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+    User save(User user);
 
-@Service
-public class UserService {
+    Optional<User> findByName(String name);
 
-   private final UserRepository userRepository;
+    Optional<User> findById(Long id);
 
-   public UserService(UserRepository userRepository) {
-      this.userRepository = userRepository;
-   }
-
-   @Transactional(rollbackFor = { Exception.class })
-   public User save(User user) {
-      return userRepository.save(user);
-   }
-
-   @Transactional(readOnly = true)
-   public Optional<User> findByName(String name) {
-      return userRepository.findByName(name);
-   }
-
-   @Transactional(readOnly = true)
-   public Optional<User> findById(Long id) {
-      return userRepository.findById(id);
-   }
 }

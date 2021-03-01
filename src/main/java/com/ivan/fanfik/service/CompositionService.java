@@ -2,63 +2,24 @@ package com.ivan.fanfik.service;
 
 import com.ivan.fanfik.entity.Composition;
 import com.ivan.fanfik.entity.User;
-import com.ivan.fanfik.repository.CompositionRepository;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class CompositionService {
-   private final CompositionRepository compositionRepository;
+public interface CompositionService {
 
-   public CompositionService(CompositionRepository compositionRepository) {
-      this.compositionRepository = compositionRepository;
-   }
+   Composition save(Composition composition);
 
-   @Transactional(rollbackFor = { Exception.class })
-   public Composition save(Composition composition) {
-      return compositionRepository.save(composition);
-   }
+   List<Composition> findByUser(User user);
 
-   @Transactional(readOnly = true)
-   public List<Composition> findByUser(User user) {
-      return compositionRepository.findByUser(user);
-   }
+   List<Composition> findAll();
 
-   @Transactional(readOnly = true)
-   public List<Composition> findAll() {
-      return compositionRepository.findAll();
-   }
+   Optional<Composition> findById(Long id);
 
-   @Transactional(readOnly = true)
-   public Optional<Composition> findById(Long id) {
-      return compositionRepository.findById(id);
-   }
+   Optional<Composition> findByIdFast(Long id);
 
-   @Transactional(readOnly = true)
-   public Optional<Composition> findByIdFast(Long id) {
-      return compositionRepository.findByIdDefault(id);
-   }
+   List<Composition> findByNewestDateUpdate();
 
-   @Transactional(readOnly = true)
-   public List<Composition> findByNewestDateUpdate() {
-      return compositionRepository.findTop15ByOrderByDateUpdateDesc();
-   }
-
-   @Transactional(readOnly = true)
-   public List<Composition> findBySearchText(String text) {
-      if (stringIsEmpty(text))
-         return new ArrayList<>();
-      return compositionRepository.findByNameOrTagText(text);
-   }
-
-   private boolean stringIsEmpty(String string) {
-      return StringUtils.isEmpty(string);
-   }
+   List<Composition> findBySearchText(String text);
 
 }

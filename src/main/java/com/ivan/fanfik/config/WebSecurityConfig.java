@@ -1,8 +1,5 @@
 package com.ivan.fanfik.config;
 
-import java.util.Optional;
-
-import com.ivan.fanfik.entity.User;
 import com.ivan.fanfik.exception.UsernameNotFoundException;
 import com.ivan.fanfik.service.UserService;
 
