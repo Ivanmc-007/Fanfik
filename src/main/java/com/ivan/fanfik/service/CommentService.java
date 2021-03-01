@@ -7,6 +7,7 @@ import com.ivan.fanfik.entity.Composition;
 import com.ivan.fanfik.repository.CommentRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CommentService {
@@ -17,10 +18,12 @@ public class CommentService {
       this.commentRepository = commentRepository;
    }
 
+   @Transactional(rollbackFor = { Exception.class })
    public Comment save(Comment comment) {
       return commentRepository.save(comment);
    }
 
+   @Transactional(readOnly = true)
    public List<Comment> findByComposition(Composition composition) {
       return commentRepository.findByComposition(composition);
    }
