@@ -3,7 +3,7 @@ package com.ivan.fanfik.controller;
 import java.util.List;
 
 import com.ivan.fanfik.entity.Tag;
-import com.ivan.fanfik.service.TagServiceImpl;
+import com.ivan.fanfik.service.TagService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/tags")
 public class TagRESTController {
 
-   private final TagServiceImpl tagServiceImpl;
+   private final TagService tagService;
 
-   public TagRESTController(TagServiceImpl tagServiceImpl) {
-      this.tagServiceImpl = tagServiceImpl;
+   public TagRESTController(TagService tagService) {
+      this.tagService = tagService;
    }
 
    @GetMapping
    public List<Tag> findAll() {
-      return tagServiceImpl.findAll();
+      return tagService.findAll();
    }
 
 }
