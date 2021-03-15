@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Timestamp;
@@ -17,7 +18,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@DataJpaTest // By default, tests annotated with @DataJpaTest are transactional and roll back at the end of each test
 public class CompositionRepositoryIntegrationTest {
 
     private final static String NAME_OF_COMPOSITION_1 = "Маша и медведь";
@@ -157,4 +158,21 @@ public class CompositionRepositoryIntegrationTest {
         assertThat(compositions.size()).isEqualTo(1L);
         assertThat(compositions.get(0).getName()).isEqualTo(composition.getName());
     }
+
+    @Test
+    @Sql(scripts = { "classpath:dt/migration/test__Insert_Composition.sql" })
+    public void whenFindTop15ByOrderByDateUpdateDesc_thenReturnTop15List() {
+        List<Composition> compositions = compositionRepository.findTop15ByOrderByDateUpdateDesc();
+        assertThat(compositions.size()).isLessThanOrEqualTo(15);
+    }
+
+    @Test
+    @Sql(scripts = { "classpath:dt/migration/test__Insert_Composition.sql" })
+    public void whenFindByIdDefault_thenReturnComposition() {
+        // data should be the same as in db migration
+        Optional<Composition> optional = compositionRepository.findByIdDefault(10L);
+        assertThat(optional.isPresent()).isTrue();
+        assertThat(optional.get().getName()).isEqualTo("Composition name first");
+    }
+
 }
